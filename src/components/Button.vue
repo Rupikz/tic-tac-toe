@@ -16,6 +16,12 @@ export default {
   font-size: 1.4em;
   padding: 15px 0;
   border: 0;
+  color: #e0e0e0;
+  transition: .3s ;
+}
+
+.restart:hover {
+  background-color: #c95143;
   color: #ffffff
 }
 </style>

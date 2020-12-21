@@ -1,12 +1,27 @@
 <template>
-  <td class="cell" @click="strike">
-    <span class="figure"></span>
+  <td class="cell" @click.once="slap">
+    <span class="figure" :class="{ cross, zero }"></span>
   </td>
 </template>
 
 <script>
 export default {
   name: 'Cell',
+  data() {
+    return {
+      cross: false,
+      zero: false,
+    };
+  },
+  methods: {
+    slap() {
+      if (Math.random() > 0.5) {
+        this.cross = true;
+      } else {
+        this.zero = true;
+      }
+    },
+  },
 };
 </script>
 
@@ -28,7 +43,7 @@ export default {
 
   /* X */
 
-  .figure:before, .figure:after {
+  .cross:before, .cross:after {
     content: "";
     position: absolute;
     height: 33px;
@@ -37,17 +52,17 @@ export default {
     left: -2px;
     background-color: #2c3e50;
   }
-  .figure:before {
+  .cross:before {
     transform: rotate(45deg);
   }
-  .figure:after {
+  .cross:after {
     transform: rotate(-45deg);
   }
 
   /* O */
 
-  /* .figure:before,
-  .figure:after {
+  .zero:before,
+  .zero:after {
     content: "";
     position: absolute;
     top: 0;
@@ -57,6 +72,6 @@ export default {
     border: 5px solid #2c3e50;
     -moz-border-radius: 50px 50px 50px 50px;
     border-radius: 50px 50px 50px 50px;
-  } */
+  }
 
 </style>

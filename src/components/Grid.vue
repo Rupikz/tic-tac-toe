@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import player from '../assets/playersType';
 import emitter from '../eventHub';
 import Cell from './Cell.vue';
@@ -45,13 +46,38 @@ export default {
     };
   },
   methods: {
-
+    addStep(id) {
+      this.position[this.currentPlayer].push(id);
+      return this;
+    },
+    changePlayer() {
+      emitter.emit('current-player', this.currentPlayer);
+      this.currentPlayer = this.currentPlayer === player.zero ? player.cross : player.zero;
+    },
+    checkWinner() {
+      const currentStateGrid = this.position[this.currentPlayer].sort();
+      if (currentStateGrid.length >= 3) {
+        this.winConditions.forEach((con) => {
+          const intersection = _.intersection(con, currentStateGrid);
+          if (JSON.stringify(intersection)
+            === JSON.stringify(con)) {
+            console.log('Победа', this.currentPlayer);
+            this.$emit('win', this.currentPlayer);
+          }
+        });
+      }
+    },
   },
   created() {
-    emitter.on('slap', (event) => {
-      if (!event.exists) {
-        this.currentPlayer = this.currentPlayer === player.zero ? player.cross : player.zero;
+    emitter.on('slap', (msg) => {
+      if (!msg.exists) {
+        this.addStep(+msg.id).checkWinner();
+        this.changePlayer();
       }
+    });
+    emitter.on('clear-grid', () => {
+      this.position[player.zero] = [];
+      this.position[player.cross] = [];
     });
   },
 };

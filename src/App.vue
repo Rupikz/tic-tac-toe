@@ -3,7 +3,7 @@
     <h1>TIC TAC TOE</h1>
     <h4>MATCH №{{ match }}</h4>
     <Dashboard :wins="wins" />
-    <Grid />
+    <Grid @win="gameIsWon" />
     <button class="restart" @click="restartGame">Restart</button>
   </div>
 </template>
@@ -32,7 +32,15 @@ export default {
   methods: {
     restartGame() {
       emitter.emit('clear-cell');
+      emitter.emit('clear-grid');
       this.match += 1;
+      this.wins[player.zero] = 0;
+      this.wins[player.cross] = 0;
+    },
+    gameIsWon(winer) {
+      this.wins[winer] += 1;
+      emitter.emit('clear-cell');
+      emitter.emit('clear-grid');
     },
   },
 };

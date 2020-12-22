@@ -59,10 +59,10 @@ export default {
   .cross:before, .cross:after {
     content: "";
     position: absolute;
-    height: 33px;
+    height: 45px;
     width: 5px;
-    top: 2px;
-    left: -2px;
+    top: -5px;
+    left: -3px;
     background-color: #f1c40f;
   }
   .cross:before {
@@ -78,7 +78,7 @@ export default {
   .zero:after {
     content: "";
     position: absolute;
-    top: 0;
+    top: 0px;
     left: -21px;
     width: 32px;
     height: 32px;

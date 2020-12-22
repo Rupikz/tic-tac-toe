@@ -1,13 +1,18 @@
 <template>
   <div class="dashboard">
-    <div class="score score-left">{{ wins.zero }}</div>
+    <div class="score score-left" :class="{'dashboard-zero': player === 'cross'}">
+      {{ wins.zero }}
+    </div>
     <span class="separator"></span>
-    <div class="score score-right">{{ wins.cross }}</div>
+    <div class="score score-right" :class="{'dashboard-cross': player === 'zero'}">
+      {{ wins.cross }}
+    </div>
   </div>
 </template>
 
 <script>
 import player from '../assets/playersType';
+import emitter from '../eventHub';
 
 export default {
 
@@ -15,6 +20,17 @@ export default {
     wins: player,
   },
   name: 'Dashboard',
+  data() {
+    return {
+      player: 'cross',
+    };
+  },
+  created() {
+    emitter.on('current-player', (name) => {
+      console.log(name);
+      this.player = name;
+    });
+  },
 };
 </script>
 
@@ -42,11 +58,21 @@ export default {
 
   .score-left {
     border-radius: 15px 0 0 0;
-    background-color: #f1c40f;
+    background-color: #217ad3;
   }
 
   .score-right {
     border-radius: 0 15px 0 0;
-    background-color: #217ad3;
+    background-color: #f1c40f;
+  }
+
+  .dashboard-zero {
+    box-shadow:-5px -5px 20px  #217ad3;
+    z-index: -1;
+  }
+
+  .dashboard-cross {
+    box-shadow:5px -5px 20px  #f1c40f;
+    z-index: -1;
   }
 </style>

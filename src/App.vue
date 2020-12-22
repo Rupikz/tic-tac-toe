@@ -3,7 +3,7 @@
     <h1>TIC TAC TOE</h1>
     <h4>MATCH №{{ match }}</h4>
     <Dashboard :wins="wins" />
-    <Grid />
+    <Grid @slap="test"/>
     <button class="restart" @click="restartGame">Restart</button>
   </div>
 </template>
@@ -32,6 +32,10 @@ export default {
     restartGame() {
       emitter.emit('clear-cell');
       this.match += 1;
+    },
+
+    test(id) {
+      console.log('app', id);
     },
   },
 };

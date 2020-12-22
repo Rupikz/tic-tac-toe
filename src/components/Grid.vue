@@ -2,19 +2,19 @@
   <div class="grid">
     <table>
       <tr>
-        <Cell name="1" />
-        <Cell name="2" />
-        <Cell name="3" />
+        <Cell name="1" @slap="slapBroker" />
+        <Cell name="2" @slap="slapBroker"/>
+        <Cell name="3" @slap="slapBroker"/>
       </tr>
       <tr>
-        <Cell name="4" />
-        <Cell name="5" />
-        <Cell name="6" />
+        <Cell name="4" @slap="slapBroker"/>
+        <Cell name="5" @slap="slapBroker"/>
+        <Cell name="6" @slap="slapBroker"/>
       </tr>
       <tr>
-        <Cell name="7" />
-        <Cell name="8" />
-        <Cell name="9" />
+        <Cell name="7" @slap="slapBroker"/>
+        <Cell name="8" @slap="slapBroker"/>
+        <Cell name="9" @slap="slapBroker"/>
       </tr>
     </table>
   </div>
@@ -29,6 +29,9 @@ export default {
   },
   name: 'Grid',
   methods: {
+    slapBroker(id) {
+      this.$emit('slap', id);
+    },
   },
 };
 </script>

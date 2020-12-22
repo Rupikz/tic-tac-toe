@@ -9,6 +9,7 @@ import emitter from '../eventHub';
 
 export default {
   name: 'Cell',
+  props: ['name'],
   data() {
     return {
       mark: '', // cross or zero
@@ -17,13 +18,13 @@ export default {
   },
   methods: {
     slap() {
-      console.log('lox');
       if (Math.random() > 0.5 && !this.exists) {
         this.mark = 'cross';
       } else {
         this.mark = 'zero';
       }
       this.exists = true;
+      this.$emit('slap', this.name);
     },
   },
   created() {
@@ -60,7 +61,7 @@ export default {
     width: 5px;
     top: 2px;
     left: -2px;
-    background-color: #2c3e50;
+    background-color: #f1c40f;
   }
   .cross:before {
     transform: rotate(45deg);
@@ -79,7 +80,7 @@ export default {
     left: -21px;
     width: 32px;
     height: 32px;
-    border: 5px solid #2c3e50;
+    border: 5px solid #217ad3;
     -moz-border-radius: 50px 50px 50px 50px;
     border-radius: 50px 50px 50px 50px;
   }

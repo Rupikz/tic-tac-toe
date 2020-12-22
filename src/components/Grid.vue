@@ -23,7 +23,7 @@
 <script>
 import _ from 'lodash';
 import player from '../assets/playersType';
-import emitter from '../eventHub';
+import emitter from '../assets/eventHub';
 import Cell from './Cell.vue';
 
 export default {
@@ -50,10 +50,12 @@ export default {
       this.position[this.currentPlayer].push(id);
       return this;
     },
+
     changePlayer() {
       emitter.emit('current-player', this.currentPlayer);
       this.currentPlayer = this.currentPlayer === player.zero ? player.cross : player.zero;
     },
+
     checkWinner() {
       const currentStateGrid = this.position[this.currentPlayer].sort();
       if (currentStateGrid.length >= 3) {
@@ -61,8 +63,7 @@ export default {
           const intersection = _.intersection(con, currentStateGrid);
           if (JSON.stringify(intersection)
             === JSON.stringify(con)) {
-            console.log('Победа', this.currentPlayer);
-            this.$emit('win', this.currentPlayer);
+            emitter.emit('win', this.currentPlayer);
           }
         });
       }
@@ -70,12 +71,12 @@ export default {
   },
   created() {
     emitter.on('slap', (msg) => {
-      if (!msg.exists) {
-        this.addStep(+msg.id).checkWinner();
-        this.changePlayer();
-      }
+      this.addStep(+msg.id).checkWinner();
+      this.changePlayer();
     });
+
     emitter.on('clear-grid', () => {
+      emitter.emit('clear-cell');
       this.position[player.zero] = [];
       this.position[player.cross] = [];
     });

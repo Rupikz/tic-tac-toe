@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import emitter from '../eventHub';
+import emitter from '../assets/eventHub';
 
 export default {
   name: 'Cell',
@@ -14,36 +14,46 @@ export default {
     return {
       mark: '',
       exists: false,
+      freeze: false,
     };
   },
   methods: {
     slap() {
-      if (!this.exists) {
+      if (!this.exists && !this.freeze) {
         this.mark = this.$parent.currentPlayer;
-      }
-      emitter.emit('slap', {
-        id: this.id,
-        exists: this.exists,
-      });
+        this.exists = true;
 
-      this.exists = true;
+        emitter.emit('slap', {
+          id: this.id,
+          exists: this.exists,
+        });
+      }
     },
   },
   created() {
     emitter.on('clear-cell', () => {
       this.mark = '';
       this.exists = false;
+      this.freeze = false;
+    });
+
+    emitter.on('win', () => {
+      this.freeze = true;
     });
   },
 };
 </script>
 
 <style>
-  td {
-    border: 15px #2c3e50 solid;
+  .cell {
+    border: 10px #2c3e50 solid;
     width: 80px;
     height: 80px;
     background-color: #34495e;
+  }
+
+  .cell:hover {
+    background-color: #364758;
   }
 
   .figure {
@@ -56,7 +66,7 @@ export default {
 
   /* X */
 
-  .cross:before, .cross:after {
+  .figure.cross:before, .figure.cross:after {
     content: "";
     position: absolute;
     height: 45px;
@@ -65,17 +75,17 @@ export default {
     left: -3px;
     background-color: #f1c40f;
   }
-  .cross:before {
+  .figure.cross:before {
     transform: rotate(45deg);
   }
-  .cross:after {
+  .figure.cross:after {
     transform: rotate(-45deg);
   }
 
   /* O */
 
-  .zero:before,
-  .zero:after {
+  .figure.zero:before,
+  .figure.zero:after {
     content: "";
     position: absolute;
     top: 0px;

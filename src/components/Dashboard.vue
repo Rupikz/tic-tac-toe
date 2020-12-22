@@ -12,7 +12,7 @@
 
 <script>
 import player from '../assets/playersType';
-import emitter from '../eventHub';
+import emitter from '../assets/eventHub';
 
 export default {
 
@@ -27,7 +27,6 @@ export default {
   },
   created() {
     emitter.on('current-player', (name) => {
-      console.log(name);
       this.player = name;
     });
   },
@@ -46,7 +45,7 @@ export default {
   .separator {
     position: relative;
     content: '';
-    width: 20px;
+    width: 13px;
     background-color: #2c3e50;
   }
 

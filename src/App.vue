@@ -1,9 +1,10 @@
 <template>
   <div class="container">
     <h1>TIC TAC TOE</h1>
-    <h4>MATCH №{{ match }}</h4>
+    <h4 v-if="gameOver" class="winner" :class="gameOver">{{ gameOver }} Won!</h4>
+    <h4 v-else>MATCH №{{ match }}</h4>
     <Dashboard :wins="wins" />
-    <Grid @win="gameIsWon" />
+    <Grid />
     <button class="restart" @click="restartGame">Restart</button>
   </div>
 </template>
@@ -11,7 +12,7 @@
 <script>
 import Dashboard from './components/Dashboard.vue';
 import Grid from './components/Grid.vue';
-import emitter from './eventHub';
+import emitter from './assets/eventHub';
 import player from './assets/playersType';
 
 export default {
@@ -22,7 +23,8 @@ export default {
   },
   data() {
     return {
-      match: 0,
+      match: 1,
+      gameOver: '',
       wins: {
         [player.zero]: 0,
         [player.cross]: 0,
@@ -31,18 +33,18 @@ export default {
   },
   methods: {
     restartGame() {
-      emitter.emit('clear-cell');
       emitter.emit('clear-grid');
       this.match += 1;
-      this.wins[player.zero] = 0;
-      this.wins[player.cross] = 0;
-    },
-    gameIsWon(winer) {
-      this.wins[winer] += 1;
-      emitter.emit('clear-cell');
-      emitter.emit('clear-grid');
+      this.gameOver = false;
     },
   },
+  created() {
+    emitter.on('win', (winer) => {
+      this.wins[winer] += 1;
+      this.gameOver = winer;
+    });
+  },
+
 };
 </script>
 
@@ -77,5 +79,21 @@ export default {
 .restart:hover {
   background-color: #c95143;
   color: #ffffff
+}
+
+.winner {
+  font-weight: 700;
+}
+
+.winner:first-letter {
+  text-transform: uppercase;
+}
+
+.winner.zero {
+  color: #217ad3;
+}
+
+.winner.cross {
+  color: #f1c40f;
 }
 </style>

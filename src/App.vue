@@ -3,7 +3,7 @@
     <h1>TIC TAC TOE</h1>
     <h4>MATCH №{{ match }}</h4>
     <Dashboard :wins="wins" />
-    <Grid @slap="test"/>
+    <Grid />
     <button class="restart" @click="restartGame">Restart</button>
   </div>
 </template>
@@ -12,6 +12,7 @@
 import Dashboard from './components/Dashboard.vue';
 import Grid from './components/Grid.vue';
 import emitter from './eventHub';
+import player from './assets/playersType';
 
 export default {
   name: 'App',
@@ -23,8 +24,8 @@ export default {
     return {
       match: 0,
       wins: {
-        O: 0,
-        X: 0,
+        [player.zero]: 0,
+        [player.cross]: 0,
       },
     };
   },
@@ -32,10 +33,6 @@ export default {
     restartGame() {
       emitter.emit('clear-cell');
       this.match += 1;
-    },
-
-    test(id) {
-      console.log('app', id);
     },
   },
 };

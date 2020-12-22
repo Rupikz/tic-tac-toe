@@ -1,15 +1,18 @@
 <template>
   <div class="dashboard">
-    <div class="score score-left">{{ wins.X }}</div>
+    <div class="score score-left">{{ wins.zero }}</div>
     <span class="separator"></span>
-    <div class="score score-right">{{ wins.O }}</div>
+    <div class="score score-right">{{ wins.cross }}</div>
   </div>
 </template>
 
 <script>
+import player from '../assets/playersType';
+
 export default {
+
   props: {
-    wins: Object,
+    wins: player,
   },
   name: 'Dashboard',
 };
@@ -27,22 +30,23 @@ export default {
   .separator {
     position: relative;
     content: '';
-    width: 8px;
-    background-color: #e74c3c;
+    width: 20px;
+    background-color: #2c3e50;
   }
 
   .score {
     padding: 15px 0;
-    background-color: #f1c40f;
     width: 100%;
     vertical-align: bottom;
   }
 
   .score-left {
     border-radius: 15px 0 0 0;
+    background-color: #f1c40f;
   }
 
   .score-right {
     border-radius: 0 15px 0 0;
+    background-color: #217ad3;
   }
 </style>

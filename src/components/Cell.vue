@@ -9,22 +9,24 @@ import emitter from '../eventHub';
 
 export default {
   name: 'Cell',
-  props: ['name'],
+  props: ['id'],
   data() {
     return {
-      mark: '', // cross or zero
+      mark: '',
       exists: false,
     };
   },
   methods: {
     slap() {
-      if (Math.random() > 0.5 && !this.exists) {
-        this.mark = 'cross';
-      } else {
-        this.mark = 'zero';
+      if (!this.exists) {
+        this.mark = this.$parent.currentPlayer;
       }
+      emitter.emit('slap', {
+        id: this.id,
+        exists: this.exists,
+      });
+
       this.exists = true;
-      this.$emit('slap', this.name);
     },
   },
   created() {

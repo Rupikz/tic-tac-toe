@@ -28,6 +28,8 @@ export default {
     Cell,
   },
   name: 'Grid',
+  methods: {
+  },
 };
 </script>
 

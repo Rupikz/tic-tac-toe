@@ -1,26 +1,36 @@
 <template>
-  <td class="cell" @click.once="slap">
-    <span class="figure" :class="{ cross, zero }"></span>
+  <td class="cell" @click="slap" >
+    <span class="figure" :class="mark"></span>
   </td>
 </template>
 
 <script>
+import emitter from '../eventHub';
+
 export default {
   name: 'Cell',
   data() {
     return {
-      cross: false,
-      zero: false,
+      mark: '', // cross or zero
+      exists: false,
     };
   },
   methods: {
     slap() {
-      if (Math.random() > 0.5) {
-        this.cross = true;
+      console.log('lox');
+      if (Math.random() > 0.5 && !this.exists) {
+        this.mark = 'cross';
       } else {
-        this.zero = true;
+        this.mark = 'zero';
       }
+      this.exists = true;
     },
+  },
+  created() {
+    emitter.on('clear-cell', () => {
+      this.mark = '';
+      this.exists = false;
+    });
   },
 };
 </script>

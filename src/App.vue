@@ -4,21 +4,20 @@
     <h4>MATCH №{{ match }}</h4>
     <Dashboard :wins="wins" />
     <Grid />
-    <Button @click="restartGame"/>
+    <button class="restart" @click="restartGame">Restart</button>
   </div>
 </template>
 
 <script>
 import Dashboard from './components/Dashboard.vue';
 import Grid from './components/Grid.vue';
-import Button from './components/Button.vue';
+import emitter from './eventHub';
 
 export default {
   name: 'App',
   components: {
     Dashboard,
     Grid,
-    Button,
   },
   data() {
     return {
@@ -31,6 +30,7 @@ export default {
   },
   methods: {
     restartGame() {
+      emitter.emit('clear-cell');
       this.match += 1;
     },
   },
@@ -51,5 +51,22 @@ export default {
 .container {
   width: 306px;
   margin: 0 auto;
+}
+
+.restart {
+  width: 100%;
+  background-color: #e74c3c;
+  border-radius: 0 0 15px 15px ;
+  font-size: 1.4em;
+  padding: 15px 0;
+  border: 0;
+  color: #e0e0e0;
+  transition: .3s ;
+  text-transform: uppercase;
+}
+
+.restart:hover {
+  background-color: #c95143;
+  color: #ffffff
 }
 </style>

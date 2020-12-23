@@ -1,5 +1,9 @@
 # tic-tac-toe
 
+## Preview
+
+![](docs/preview.gif)
+
 ## Project run
 
 ```

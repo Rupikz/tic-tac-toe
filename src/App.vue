@@ -49,14 +49,15 @@ export default {
 </script>
 
 <style>
-#app {
+body {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 60px 0;
+  font-style: normal;
 }
 
 .container {
@@ -74,6 +75,7 @@ export default {
   color: #e0e0e0;
   transition: .3s ;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .restart:hover {

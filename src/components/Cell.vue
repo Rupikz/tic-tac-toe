@@ -46,9 +46,11 @@ export default {
 
 <style>
   .cell {
+    position: relative;
+    background-clip: padding-box;
     border: 10px #2c3e50 solid;
     width: 80px;
-    height: 80px;
+    height: 86px;
     background-color: #34495e;
   }
 
@@ -57,11 +59,14 @@ export default {
   }
 
   .figure {
-    position: relative;
-    top: 0;
-    right: 0;
     width: 32px;
     height: 32px;
+  }
+
+  button,
+  button:active,
+  button:focus {
+    outline: none;
   }
 
   /* X */
@@ -71,8 +76,8 @@ export default {
     position: absolute;
     height: 45px;
     width: 5px;
-    top: -5px;
-    left: -3px;
+    right: 41px;
+    top: 22px;
     background-color: #f1c40f;
   }
   .figure.cross:before {
@@ -88,10 +93,10 @@ export default {
   .figure.zero:after {
     content: "";
     position: absolute;
-    top: 0px;
-    left: -21px;
     width: 32px;
     height: 32px;
+    right: 22px;
+    top: 25px;
     border: 5px solid #217ad3;
     -moz-border-radius: 50px 50px 50px 50px;
     border-radius: 50px 50px 50px 50px;

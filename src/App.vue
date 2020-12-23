@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <h1>TIC TAC TOE</h1>
-    <h4 v-if="gameOver" class="winner" :class="gameOver">{{ gameOver }} Won!</h4>
+    <h4 v-if="gameOver" class="winner" :class="gameOver">
+      {{ gameOver }} Won!
+    </h4>
     <h4 v-else>MATCH №{{ match }}</h4>
     <Dashboard :wins="wins" />
     <Grid />
@@ -10,16 +12,16 @@
 </template>
 
 <script>
-import Dashboard from './components/Dashboard.vue';
-import Grid from './components/Grid.vue';
-import emitter from './assets/eventHub';
-import player from './assets/playersType';
+import Dashboard from './components/Dashboard.vue'
+import Grid from './components/Grid.vue'
+import emitter from './assets/eventHub'
+import player from './assets/playersType'
 
 export default {
   name: 'App',
   components: {
     Dashboard,
-    Grid,
+    Grid
   },
   data() {
     return {
@@ -27,25 +29,24 @@ export default {
       gameOver: '',
       wins: {
         [player.zero]: 0,
-        [player.cross]: 0,
-      },
-    };
-  },
-  methods: {
-    restartGame() {
-      emitter.emit('clear-grid');
-      this.match += 1;
-      this.gameOver = false;
-    },
+        [player.cross]: 0
+      }
+    }
   },
   created() {
     emitter.on('win', (winer) => {
-      this.wins[winer] += 1;
-      this.gameOver = winer;
-    });
+      this.wins[winer] += 1
+      this.gameOver = winer
+    })
   },
-
-};
+  methods: {
+    restartGame() {
+      emitter.emit('clear-grid')
+      this.match += 1
+      this.gameOver = false
+    }
+  }
+}
 </script>
 
 <style>
@@ -68,19 +69,19 @@ body {
 .restart {
   width: 100%;
   background-color: #e74c3c;
-  border-radius: 0 0 15px 15px ;
+  border-radius: 0 0 15px 15px;
   font-size: 1.4em;
   padding: 15px 0;
   border: 0;
   color: #e0e0e0;
-  transition: .3s ;
+  transition: 0.3s;
   text-transform: uppercase;
   cursor: pointer;
 }
 
 .restart:hover {
   background-color: #c95143;
-  color: #ffffff
+  color: #ffffff;
 }
 
 .winner {

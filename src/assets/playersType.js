@@ -1,4 +1,4 @@
 export default {
   zero: 'zero',
-  cross: 'cross',
-};
+  cross: 'cross'
+}
